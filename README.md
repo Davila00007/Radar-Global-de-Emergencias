@@ -15,7 +15,11 @@
 ![Tipo](https://img.shields.io/badge/proyecto-acad%C3%A9mico-009edb)
 ![Dependencias](https://img.shields.io/badge/frameworks-ninguno-0b2e4f)
 
-<img src="docs/inicio.png" alt="Página de inicio de Radar Global de Emergencias" width="900">
+### 🌐 [Ver la página en vivo](https://davila00007.github.io/Radar-Global-de-Emergencias/)
+
+[![Ver demo](https://img.shields.io/badge/Ver%20demo-davila00007.github.io-009edb?style=for-the-badge&logo=githubpages&logoColor=white)](https://davila00007.github.io/Radar-Global-de-Emergencias/)
+
+<a href="https://davila00007.github.io/Radar-Global-de-Emergencias/"><img src="docs/inicio.png" alt="Página de inicio de Radar Global de Emergencias" width="900"></a>
 
 </div>
 
@@ -23,6 +27,7 @@
 
 ## Tabla de contenido
 
+- [Demo en vivo](#demo-en-vivo)
 - [Descripción](#descripción)
 - [Funcionalidades](#funcionalidades)
 - [Capturas](#capturas)
@@ -35,6 +40,14 @@
 - [Posibles mejoras](#posibles-mejoras)
 - [Créditos](#créditos)
 - [Autor](#autor)
+
+---
+
+## Demo en vivo
+
+👉 **https://davila00007.github.io/Radar-Global-de-Emergencias/**
+
+La página está publicada con **GitHub Pages** y funciona en computador, tableta y celular.
 
 ---
 
