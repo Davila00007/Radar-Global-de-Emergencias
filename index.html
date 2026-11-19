@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Radar Global de Emergencias</title>
+  <meta name="description" content="Mapa interactivo de emergencias en el mundo con enlaces a ayuda oficial.">
+  <meta name="theme-color" content="#009edb">
+
+  <!-- Ícono de la pestaña -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Biblioteca de íconos: Font Awesome 6 Free -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a class="skip" href="#mapa">Saltar al mapa</a>
+
+  <!-- Cinta de alertas en vivo -->
+  <div class="ticker" aria-hidden="true">
+    <span class="ticker__label"><i class="fa-solid fa-bell"></i> Alertas</span>
+    <div class="ticker__track"><div class="ticker__inner" id="ticker"></div></div>
+  </div>
+
+  <header class="header">
+    <a href="#inicio" class="brand">
+      <img class="brand__mark" src="assets/favicon.svg" alt="" width="46" height="46">
+      <span class="brand__text"><b>Radar Global</b><br>de Emergencias</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#inicio" class="is-active">Inicio</a>
+      <a href="#mapa">Mapa</a>
+      <a href="#emergencias">Emergencias</a>
+      <a href="#organizaciones">Organizaciones</a>
+    </nav>
+
+    <label class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="search" type="search" placeholder="País, región o tipo…" aria-label="Buscar emergencias">
+    </label>
+
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </header>
+
+  <main id="inicio">
+
+    <!-- Encabezado + estadísticas -->
+    <section class="hero">
+      <div class="hero__title">
+        <p class="eyebrow">Monitoreo mundial</p>
+        <h1>Emergencias activas en el mundo</h1>
+        <p class="hero__lead">Consulta dónde están ocurriendo desastres y crisis humanitarias, qué necesita la población y a qué organizaciones oficiales acudir.</p>
+      </div>
+      <dl class="stats" id="stats"></dl>
+    </section>
+
+    <div class="demo-banner" role="note">
+      <i class="fa-solid fa-flask"></i>
+      <span><b>Versión de demostración:</b> los eventos que se muestran son ficticios y no corresponden a emergencias reales.</span>
+    </div>
+
+    <!-- Mapa -->
+    <section class="map-block" id="mapa" aria-label="Mapa mundial de emergencias">
+      <div class="map-block__bar">
+        <h2><i class="fa-solid fa-earth-americas"></i> Mapa</h2>
+        <span class="hint"><i class="fa-solid fa-hand"></i> Arrastra para moverte · Ctrl + rueda para hacer zoom</span>
+      </div>
+
+      <div class="map" id="map">
+        <div class="map__canvas" id="mapCanvas">
+          <svg class="map__svg" viewBox="0 0 1800 900" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M60 0H0V60" fill="none" stroke="#c9d1d8" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="1800" height="900" fill="url(#grid)"/>
+            <path id="land" class="map__land" fill-rule="evenodd"/>
+            <g id="areas"></g>
+          </svg>
+          <div class="map__markers" id="markers"></div>
+        </div>
+
+        <div class="map__controls">
+          <button id="zoomIn" aria-label="Acercar"><i class="fa-solid fa-plus"></i></button>
+          <button id="zoomOut" aria-label="Alejar"><i class="fa-solid fa-minus"></i></button>
+          <button id="zoomReset" aria-label="Ver mapa completo"><i class="fa-solid fa-expand"></i></button>
+        </div>
+      </div>
+
+      <div class="legend">
+          <p class="legend__title">Tipo</p>
+          <ul id="legendTypes"></ul>
+          <p class="legend__title">Nivel de alerta</p>
+          <ul id="legendLevels"></ul>
+      </div>
+    </section>
+
+    <!-- Filtros + tarjetas -->
+    <section id="emergencias">
+      <div class="section-head">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> Emergencias</h2>
+        <span class="count" id="count"></span>
+      </div>
+
+      <div class="filters">
+        <div class="filters__group" role="group" aria-label="Filtrar por tipo" id="typeFilters"></div>
+        <div class="filters__group" role="group" aria-label="Filtrar por nivel" id="levelFilters"></div>
+      </div>
+
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <!-- Organizaciones -->
+    <section id="organizaciones">
+      <div class="section-head">
+        <h2><i class="fa-solid fa-hand-holding-heart"></i> Organizaciones y fuentes oficiales</h2>
+      </div>
+      <div class="orgs" id="orgs"></div>
+      <p class="note"><i class="fa-solid fa-shield-halved"></i> Esta plataforma no recibe donaciones ni almacena datos bancarios: solo te dirige a sitios oficiales.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span><i class="fa-solid fa-satellite-dish"></i> Radar Global de Emergencias</span>
+    <span>Proyecto académico · Datos de demostración</span>
+  </footer>
+
+  <!-- Panel de detalle -->
+  <div class="veil" id="veil"></div>
+  <aside class="panel" id="panel" aria-label="Detalle de la emergencia" inert>
+    <button class="panel__close" id="panelClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <div id="panelBody"></div>
+  </aside>
+
+  <script src="js/map-data.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
