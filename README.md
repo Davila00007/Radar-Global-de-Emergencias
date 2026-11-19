@@ -130,6 +130,14 @@ No necesita instalación ni compilación.
 
 > Se necesita conexión a internet para cargar los íconos y las tipografías.
 
+### Vista previa al compartir (WhatsApp y redes)
+
+`index.html` tiene etiquetas **Open Graph** que hacen que, al compartir el enlace publicado, aparezca el logo con el título y la descripción (imagen `assets/og-image.jpg`, de 1200 × 630).
+
+- Solo funciona con la página **publicada** en GitHub Pages, no con `127.0.0.1` ni con el archivo local.
+- Si el repositorio tiene otro nombre, cambia la URL en las etiquetas `og:url`, `og:image` y `twitter:image`.
+- WhatsApp guarda la vista previa en caché. Si no aparece, agrega `?v=2` al final del enlace.
+
 ---
 
 ## Estructura del proyecto
@@ -140,6 +148,7 @@ Radar-Global-de-Emergencias/
 ├── README.md
 ├── assets/
 │   ├── favicon.svg            Logo e ícono de la pestaña
+│   ├── og-image.jpg           Imagen de vista previa al compartir
 │   ├── favicon-32.png         Ícono en PNG para navegadores antiguos
 │   └── apple-touch-icon.png   Ícono para celulares
 ├── css/
